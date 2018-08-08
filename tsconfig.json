@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "lib": ["es6"],
+        "declaration": true,
+        "skipLibCheck": true
+    }
+}
