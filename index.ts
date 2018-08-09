@@ -1,22 +1,23 @@
 var path = require("path")
+var process = require("process")
 var BundleTracker = require("webpack-bundle-tracker")
 var CleanWebpackPlugin = require("clean-webpack-plugin")
-import { Configuration, Options } from 'webpack'
+import { Configuration, Options } from "webpack"
 
 const EVERGREEN = "evergreen"
 const IEXPLORE = "iexplore"
 type Browser = typeof EVERGREEN | typeof IEXPLORE
 
 type Params = {
-  inDir?: string,
-  outDir: string,
-  publicPath?: string,
+  inDir?: string
+  outDir: string
+  publicPath?: string
   transformConfig?: (config: Configuration, browser: Browser) => Configuration
 }
 
 /// The defaults that are used if a parameter isn't specified.
 const defaults = {
-  publicPath: '/static/build/',
+  publicPath: "/static/build/",
 }
 
 export default function makeConfig(p: Params): Configuration[] {
@@ -28,7 +29,6 @@ export default function makeConfig(p: Params): Configuration[] {
   // with conditional expressions in it for where the browsers differ, which is
   // easier to read than some sort of copy-and-override structure.
   const configMaker = (browser: Browser) => {
-
     // The Babel configuration is split out because it's used twice (see below).
     const babelConfig = {
       loader: "babel-loader",
@@ -40,13 +40,13 @@ export default function makeConfig(p: Params): Configuration[] {
               targets: {
                 browsers:
                   browser == IEXPLORE
-                    // We only support IE 11.
-                    ? "ie>=11"
-                    // Opera Mini is so far behind everything else, and is
-                    // almost certainly not going to be used for our projects.
-                    // I'm not sure why I can't just do "not ie all", but it
-                    // seems I can't.
-                    : [">1%", "not ie <999", "not op_mini all"],
+                    ? // We only support IE 11.
+                      "ie>=11"
+                    : // Opera Mini is so far behind everything else, and is
+                      // almost certainly not going to be used for our projects.
+                      // I'm not sure why I can't just do "not ie all", but it
+                      // seems I can't.
+                      [">1%", "not ie <999", "not op_mini all"],
               },
             },
           ],
@@ -56,7 +56,7 @@ export default function makeConfig(p: Params): Configuration[] {
     }
 
     // This is the actual config we give Webpack.
-    const config = {
+    const config: Configuration = {
       name: browser,
       // We include babel-polyfill before all our application code, on IE only.
       // This means that features that require more than just syntax transforms
@@ -70,11 +70,18 @@ export default function makeConfig(p: Params): Configuration[] {
       },
       plugins: [
         new BundleTracker({
-          filename: path.resolve(params.outDir, `__webpack.${browser}.json`),
+          // BundleTracker has a bug where it effectively calls
+          // path.resolve('.', filename)
+          // so we have to give it a CWD-relative path.
+          filename: path.relative(
+            process.cwd(),
+            path.resolve(params.outDir, `__webpack.${browser}.json`),
+          ),
         }),
-        new CleanWebpackPlugin([
-          path.resolve(params.outDir, `*.${browser}.*`),
-        ]),
+        new CleanWebpackPlugin(
+          [path.resolve(params.outDir, `*.${browser}.*`)],
+          {root: process.cwd(), watch: true},
+        ),
       ],
       module: {
         rules: [
@@ -107,7 +114,7 @@ export default function makeConfig(p: Params): Configuration[] {
       },
       // The current type definition for Webpack is missing 'module-source-map',
       // but this seems to keep TypeScript happy somehow.
-      devtool: "module-source-map" as Options.Devtool,
+      devtool: 'source-map',
     }
     if (params.transformConfig) return params.transformConfig(config, browser)
     return config

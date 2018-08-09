@@ -12,7 +12,7 @@ It also includes support for the following:
 
 ## Usage
 
-Install `wright-webpack-config`
+Install `wright-webpack-config`. You'll also need to install `webpack`, `babel-core`, and (if you're using it) `typescript` yourself.
 
 Then, in your `webpack.config.js`:
 
@@ -22,7 +22,7 @@ const path = require("path")
 
 module.exports = config({
   inDir: path.resolve(__dirname, "js"),
-  outDir: path.resolve(__dirname, "static", "build"),
+  outDir: path.resolve(__dirname, "myproject", "static", "build"),
 })
 ```
 
@@ -32,6 +32,44 @@ module.exports = config({
 - `outDir`: **Required.** Directory to output code to.
 - `publicPath`: Path that Webpack output will be available from on the server. Defaults to `/static/build/`.
 - `transformConfig`: Function that takes the generated config and potentially makes changes to it.
+
+## Example usage with Django
+
+Install `django-webpack-loader`, then edit your `settings.py`:
+
+```diff
+ INSTALLED_APPS = (
+     # ...
++    'webpack_loader',
+ )
+
+ # ...
+
++WEBPACK_LOADER = {
++    'evergreen': {
++        'BUNDLE_DIR_NAME': 'build/',
++        'STATS_FILE': os.path.join(STATIC_DIR, 'build',
++                                   '__webpack.evergreen.json'),
++    },
++    'iexplore': {
++        'BUNDLE_DIR_NAME': 'build/',
++        'STATS_FILE': os.path.join(STATIC_DIR, 'build',
++                                   '__webpack.iexplore.json'),
++    },
++}
+```
+
+Then, in your templates, add the following:
+
+```django
+{% load webpack_loader %}
+{# ... #}
+{% if 'Trident/' in request.META.HTTP_USER_AGENT %}
+    {% render_bundle 'main' config='iexplore' %}
+{% else %}
+    {% render_bundle 'main' config='evergreen' %}
+{% endif %}
+```
 
 ## License
 
