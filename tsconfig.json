@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "es6",
+        "module": "commonjs",
         "lib": ["es6"],
         "declaration": true,
         "skipLibCheck": true

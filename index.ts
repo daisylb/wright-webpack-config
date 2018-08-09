@@ -1,5 +1,4 @@
 var path = require("path")
-var webpack = require("webpack")
 var BundleTracker = require("webpack-bundle-tracker")
 var CleanWebpackPlugin = require("clean-webpack-plugin")
 import { Configuration, Options } from 'webpack'
@@ -17,7 +16,6 @@ type Params = {
 
 /// The defaults that are used if a parameter isn't specified.
 const defaults = {
-  inDir: 'frontend/',
   publicPath: '/static/build/',
 }
 
