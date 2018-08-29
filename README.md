@@ -26,14 +26,16 @@ module.exports = config({
 })
 ```
 
-## Parameters
+Then, run `webpack --mode development`, or `webpack --mode production`. **Don't** run `webpack -d` or `webpack -p`, they are **not** shorthand for the above!
+
+### Parameters
 
 - `inDir`: **Required.** Root directory of your frontend code.
 - `outDir`: **Required.** Directory to output code to.
 - `publicPath`: Path that Webpack output will be available from on the server. Defaults to `/static/build/`.
 - `transformConfig`: Function that takes the generated config and potentially makes changes to it.
 
-## Example usage with Django
+### Example usage with Django
 
 Install `django-webpack-loader`, then edit your `settings.py`:
 

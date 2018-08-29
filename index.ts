@@ -80,7 +80,10 @@ export default function makeConfig(p: Params): Configuration[] {
         }),
         new CleanWebpackPlugin(
           [path.resolve(params.outDir, `*.${browser}.*`)],
-          {root: process.cwd(), watch: true},
+          // we can't use watch: true atm, because there seems to be a bug where
+          // (at a guess) Webpack is not rewriting a bundle in watch mode
+          // because it hasn't changed, and this plugin is deleting it
+          {root: process.cwd(), exclude: [`__webpack.${browser}.json`]},
         ),
       ],
       module: {
