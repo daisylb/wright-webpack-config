@@ -26,6 +26,19 @@ module.exports = config({
 })
 ```
 
+If you're using TypeScript, you'll also want to add the following to your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "es2015"
+  }
+}
+```
+
+This stops TypeScript from producing ES3 output unconditionally, instead letting `babel-preset-env` produce the appropriate code for the appropriate browsers. (If you're using Relay, it also prevents TypeScript from munging the names of imported identifiers in a way that prevents Relay from working.)
+
 Then, run `webpack --mode development`, or `webpack --mode production`. **Don't** run `webpack -d` or `webpack -p`, they are **not** shorthand for the above!
 
 ### Parameters
