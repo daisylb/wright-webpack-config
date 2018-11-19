@@ -83,7 +83,7 @@ export default function makeConfig(p: Params): Configuration[] {
           // we can't use watch: true atm, because there seems to be a bug where
           // (at a guess) Webpack is not rewriting a bundle in watch mode
           // because it hasn't changed, and this plugin is deleting it
-          {root: process.cwd(), exclude: [`__webpack.${browser}.json`]},
+          { root: process.cwd(), exclude: [`__webpack.${browser}.json`] },
         ),
       ],
       module: {
@@ -117,7 +117,7 @@ export default function makeConfig(p: Params): Configuration[] {
       },
       // The current type definition for Webpack is missing 'module-source-map',
       // but this seems to keep TypeScript happy somehow.
-      devtool: 'source-map',
+      devtool: "source-map",
     }
     if (params.transformConfig) return params.transformConfig(config, browser)
     return config
