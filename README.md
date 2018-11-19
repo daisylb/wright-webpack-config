@@ -7,6 +7,7 @@ It also includes support for the following:
 - React/JSX
 - TypeScript/TSX
 - Imports of CSS files
+- CSS Modules (with the recommended `.module.css` or alternative `.icss` file extensions)
 - Bundle Tracker (important for Django integration!)
 - `CleanWebpackPlugin` (helps avoid filling up your disk and/or crashing Webpack due to too many files.)
 
