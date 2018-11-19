@@ -109,7 +109,14 @@ export default function makeConfig(p: Params): Configuration[] {
             use: [babelConfig, "ts-loader"],
           },
           {
-            test: /\.css$/,
+            test: /\.module\.css$|\.icss$/,
+            use: [
+              "style-loader",
+              { loader: "css-loader", options: { modules: true } },
+            ],
+          },
+          {
+            test: /(?<!\.module)\.css$/,
             use: ["style-loader", "css-loader"],
             // It seems to be annoyingly common for NPM packages to import CSS
             // themselves, so we don't exclude node_modules here.
