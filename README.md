@@ -1,6 +1,6 @@
 # wright-webpack-config
 
-A Webpack config for internal use (but it's CC0, so you can use it too if you want!), that **produces separate bundles for evergreen browsers and Internet Explorer**. This lets us exclude polyfills and Babel transforms for features that evergreen browsers support.
+A Webpack config for internal use (but it's CC0, so you can use it too if you want!), that **supports every feature in every published ECMAScript version** (even those that use polyfills), and **produces separate bundles for evergreen browsers and Internet Explorer**. This lets us exclude polyfills and Babel transforms for features that evergreen browsers support, reducing file size.
 
 It also includes support for the following:
 
@@ -12,7 +12,7 @@ It also includes support for the following:
 
 ## Usage
 
-Install `wright-webpack-config`. You'll also need to install `webpack`, `babel-core`, and (if you're using it) `typescript` yourself.
+Install `wright-webpack-config`. You'll also need to install `webpack`, `core-js`, and (if you're using it) `typescript` yourself.
 
 Then, in your `webpack.config.js`:
 

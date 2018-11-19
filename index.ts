@@ -48,10 +48,12 @@ export default function makeConfig(p: Params): Configuration[] {
                       // seems I can't.
                       [">1%", "not ie <999", "not op_mini all"],
               },
+              useBuiltIns: "entry",
             },
           ],
           "@babel/preset-react",
         ],
+        plugins: ["@babel/plugin-syntax-dynamic-import"],
       },
     }
 
@@ -62,7 +64,7 @@ export default function makeConfig(p: Params): Configuration[] {
       // This means that features that require more than just syntax transforms
       // will need to be supported by every supported browser that isn't IE;
       // in practice this doesn't seem to be a problem.
-      entry: browser == IEXPLORE ? ["@babel/polyfill", "./js"] : "./js",
+      entry: ["wright-webpack-config/in-browser/entry.js", "./js"],
       output: {
         path: params.outDir,
         filename: `[chunkhash].${browser}.js`,
@@ -92,7 +94,10 @@ export default function makeConfig(p: Params): Configuration[] {
             test: /\.js$/,
             // node_modules should contain code that already runs in browsers
             // the project in question is supposed to be compatible with.
-            exclude: /node_modules/,
+            // We need to include wright-webpack-config, though, because we want
+            // @babel/preset-env's useBuiltIns feature to process the
+            // @babel/polyfill import there.
+            exclude: /node_modules(?!\/wright-webpack-config)/,
             use: babelConfig,
           },
           {
@@ -113,7 +118,7 @@ export default function makeConfig(p: Params): Configuration[] {
       },
       resolve: {
         // If there's pre-minified code, use that first.
-        extensions: [".min.js", ".js", ".ts", ".tsx"],
+        extensions: [".mjs", ".min.js", ".js", ".ts", ".tsx"],
       },
       // The current type definition for Webpack is missing 'module-source-map',
       // but this seems to keep TypeScript happy somehow.

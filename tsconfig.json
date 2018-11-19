@@ -4,5 +4,8 @@
         "lib": ["es6"],
         "declaration": true,
         "skipLibCheck": true
-    }
+    },
+    "exclude": [
+        "in-browser"
+    ]
 }
