@@ -35,7 +35,7 @@ export default function makeConfig(p: Params): Configuration[] {
       options: {
         presets: [
           [
-            "env",
+            "@babel/preset-env",
             {
               targets: {
                 browsers:
@@ -50,7 +50,7 @@ export default function makeConfig(p: Params): Configuration[] {
               },
             },
           ],
-          "react",
+          "@babel/preset-react",
         ],
       },
     }
@@ -62,7 +62,7 @@ export default function makeConfig(p: Params): Configuration[] {
       // This means that features that require more than just syntax transforms
       // will need to be supported by every supported browser that isn't IE;
       // in practice this doesn't seem to be a problem.
-      entry: browser == IEXPLORE ? ["babel-polyfill", "./js"] : "./js",
+      entry: browser == IEXPLORE ? ["@babel/polyfill", "./js"] : "./js",
       output: {
         path: params.outDir,
         filename: `[chunkhash].${browser}.js`,
