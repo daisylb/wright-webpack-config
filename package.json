@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adambrenecki/wright-webpack-config.git"
+    "url": "git+https://github.com/excitedleigh/wright-webpack-config.git"
   },
   "author": "Adam Brenecki",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/adambrenecki/wright-webpack-config/issues"
+    "url": "https://github.com/excitedleigh/wright-webpack-config/issues"
   },
-  "homepage": "https://github.com/adambrenecki/wright-webpack-config#readme",
+  "homepage": "https://github.com/excitedleigh/wright-webpack-config#readme",
   "devDependencies": {
     "@types/webpack": "^4.4.9",
     "source-map": "^0.7.3",
