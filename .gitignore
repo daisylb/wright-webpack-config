@@ -1,3 +1,6 @@
 *.js
+!test-project/**
 *.d.ts
 *.tgz
+node_modules
+test-project/myproject/static/build/
