@@ -54,7 +54,9 @@ export default function makeConfig(p: Params): Configuration[] {
           ],
           "wright-webpack-config/node_modules/@babel/preset-react",
         ],
-        plugins: ["wright-webpack-config/node_modules/@babel/plugin-syntax-dynamic-import"],
+        plugins: [
+          "wright-webpack-config/node_modules/@babel/plugin-syntax-dynamic-import",
+        ],
       },
     }
 
@@ -65,7 +67,7 @@ export default function makeConfig(p: Params): Configuration[] {
       // This means that features that require more than just syntax transforms
       // will need to be supported by every supported browser that isn't IE;
       // in practice this doesn't seem to be a problem.
-      entry: ["wright-webpack-config/in-browser/entry.js", "./js"],
+      entry: ["wright-webpack-config/in-browser/entry.js", params.inDir],
       output: {
         path: params.outDir,
         filename: `[chunkhash].${browser}.js`,
@@ -113,12 +115,18 @@ export default function makeConfig(p: Params): Configuration[] {
             test: /\.module\.css$|\.icss$/,
             use: [
               "wright-webpack-config/node_modules/style-loader",
-              { loader: "wright-webpack-config/node_modules/css-loader", options: { modules: true } },
+              {
+                loader: "wright-webpack-config/node_modules/css-loader",
+                options: { modules: true },
+              },
             ],
           },
           {
             test: /(?<!\.module)\.css$/,
-            use: ["wright-webpack-config/node_modules/style-loader", "wright-webpack-config/node_modules/css-loader"],
+            use: [
+              "wright-webpack-config/node_modules/style-loader",
+              "wright-webpack-config/node_modules/css-loader",
+            ],
             // It seems to be annoyingly common for NPM packages to import CSS
             // themselves, so we don't exclude node_modules here.
           },

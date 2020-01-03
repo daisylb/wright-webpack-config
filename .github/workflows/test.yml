@@ -1,0 +1,28 @@
+name: Test project build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x] # [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Attempt to build test project
+      run: |
+        npm install
+        npm run prepare
+        cd test-project
+        npm install
+        node_modules/.bin/webpack --mode development
+      env:
+        CI: true
