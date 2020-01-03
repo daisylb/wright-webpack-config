@@ -31,11 +31,11 @@ export default function makeConfig(p: Params): Configuration[] {
   const configMaker = (browser: Browser) => {
     // The Babel configuration is split out because it's used twice (see below).
     const babelConfig = {
-      loader: "babel-loader",
+      loader: "wright-webpack-config/node_modules/babel-loader",
       options: {
         presets: [
           [
-            "@babel/preset-env",
+            "wright-webpack-config/node_modules/@babel/preset-env",
             {
               targets: {
                 browsers:
@@ -48,19 +48,20 @@ export default function makeConfig(p: Params): Configuration[] {
                       // seems I can't.
                       [">1%", "not ie <999", "not op_mini all"],
               },
+              corejs: "3.6.1",
               useBuiltIns: "entry",
             },
           ],
-          "@babel/preset-react",
+          "wright-webpack-config/node_modules/@babel/preset-react",
         ],
-        plugins: ["@babel/plugin-syntax-dynamic-import"],
+        plugins: ["wright-webpack-config/node_modules/@babel/plugin-syntax-dynamic-import"],
       },
     }
 
     // This is the actual config we give Webpack.
     const config: Configuration = {
       name: browser,
-      // We include babel-polyfill before all our application code, on IE only.
+      // We include corejs/stable before all our application code, on IE only.
       // This means that features that require more than just syntax transforms
       // will need to be supported by every supported browser that isn't IE;
       // in practice this doesn't seem to be a problem.
@@ -106,18 +107,18 @@ export default function makeConfig(p: Params): Configuration[] {
             // By configuring TypeScript to output modern JS, then running it
             // through Babel, we get modern JS or IE-compatible JS just as with
             // JS input.
-            use: [babelConfig, "ts-loader"],
+            use: [babelConfig, "wright-webpack-config/node_modules/ts-loader"],
           },
           {
             test: /\.module\.css$|\.icss$/,
             use: [
-              "style-loader",
-              { loader: "css-loader", options: { modules: true } },
+              "wright-webpack-config/node_modules/style-loader",
+              { loader: "wright-webpack-config/node_modules/css-loader", options: { modules: true } },
             ],
           },
           {
             test: /(?<!\.module)\.css$/,
-            use: ["style-loader", "css-loader"],
+            use: ["wright-webpack-config/node_modules/style-loader", "wright-webpack-config/node_modules/css-loader"],
             // It seems to be annoyingly common for NPM packages to import CSS
             // themselves, so we don't exclude node_modules here.
           },

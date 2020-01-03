@@ -24,19 +24,19 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "clean-webpack-plugin": "^1.0.0",
-    "webpack-bundle-tracker": "^0.4.2-beta"
-  },
-  "peerDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.0",
+    "clean-webpack-plugin": "^1.0.0",
     "core-js": "^3.0.0",
     "css-loader": "^1.0.1",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.0",
+    "webpack-bundle-tracker": "^0.4.2-beta"
+  },
+  "peerDependencies": {
     "webpack": "^4.0.0"
   }
 }
