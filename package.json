@@ -33,7 +33,7 @@
     "core-js": "^3.0.0",
     "css-loader": "^3.4.0",
     "style-loader": "^0.23.1",
-    "ts-loader": "^6.2.1",
+    "ts-loader": "^7.0.0",
     "webpack-bundle-tracker": "^0.4.2-beta"
   },
   "peerDependencies": {
